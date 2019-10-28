@@ -42,7 +42,7 @@ def Combined(generator, discriminator):
 	model = tf.keras.models.Sequential()
 	return model
 
-print("\n\nDeleting segregation laws to create discriminator...\n\n")
+print("\n\n create discriminator...\n\n")
 discriminator = Generate_discriminator()
 
 
