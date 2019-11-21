@@ -17,3 +17,6 @@ xview2.py  - November 11th, 2019 -  Where the magic happened :)   - - Trying to 
 
 chip_xview.py - - This is the program that was modified from "Keras-GAN.py".
 wv_util.py - -    This is the program that is imported in to chip_xview.py
+
+
+November 21st, 2019 - chip_script.py - : 
