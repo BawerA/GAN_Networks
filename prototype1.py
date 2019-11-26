@@ -34,7 +34,7 @@ import mahotas as mh
 #from chainer.dataset import dataset_mixin
 from tqdm import tqdm
 import time
-import chipchip as chip_
+import chip_script as chip_
 
 start = time.time()
 #######################################
