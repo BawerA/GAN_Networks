@@ -1,6 +1,7 @@
 # GAN_Networks
 This is Team Machines GitHub for Generative Adversarial Networks(GANs).
 
+2019:
 
 dcgan.py - -  Our code so far in trying to create our own DCGAN based off of the architecture from the medium article (https://medium.com/@liyin2015/dcgan-79af14a1c247)
 
@@ -24,4 +25,6 @@ November 21st, 2019 - chip_script.py - : Just separated the chipping program fro
 November 25th, 2019 - prototype1.py - : Our architecture thus far. Many things have to still be added and modified. Modifications have been made to chip_script.py as of today as well.   
 
 December 6th, 2019 -  Last day of semester. Added a few lines to prototype1.py but havn't uploaded those changes on this Github file(only like 2 lines of code added). We are currently waiting for the code review of our prototype1.py script from our Subject Matter Expert(SME). We will continue work and research after we recieve feedback from our SME. Will most likely not do much over the winter break until then. We’ll most likely be back around January 10th with an update. First day of Spring 2020 semester starts on January 21st.
+
+2020:
 
