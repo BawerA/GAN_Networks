@@ -9,4 +9,3 @@ pip install scikit-image
 pip install opencv-python
 pip install cv2
 pip install mahotas
-sudo apt-get install 
