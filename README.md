@@ -29,5 +29,6 @@ December 6th, 2019 -  Last day of semester. Added a few lines to prototype1.py b
 December 26th, 2019 - prototype2.py - : Added a few lines of code in order to start training and even more lines for debugging those lines. Training not complete yet, almost there. Checking out diffrent batch sizes, epochs, and runtime of the code. Currently having some trouble building the combined model which combines the generator and discriminator. The error is because of the dense layer. Also added a few lines of code for TensorBoard. This isn't ready yet either, mostly because the generation has to be complete first. Still waiting for the SME code review. Added prototype2.py which contains all of these changes.  
 
 January 2020:
-Will add later.
+
+January 8th, 2020 - setup_environment.sh - : Uploaded this bash scrip to just install all of the required packages needed to run the codes. This is meant for the AWS instance. In case it ever ends and all of the data on it is erased, we can easily just set up the instannce without running it over and over and seeing what to install. This is meant for setting up an environment quickly and in the case our instance is closed and our environment and data is erased. This script was made for Kali/Ubuntu machines, haven't tried on MAC.  
 
