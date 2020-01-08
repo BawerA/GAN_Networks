@@ -91,6 +91,8 @@ def get_chips():
 
     npchipped2 = np.array(X_data)  #  nchipped2 is the numpy array, I use it down below 
     #npchipped and npchipped are the same
-    return npchipped2
+    return npchipped2, numberOfChips
 
 
+def get_array():
+    print("Getting the numpy array...")
