@@ -28,5 +28,6 @@ December 6th, 2019 -  Last day of semester. Added a few lines to prototype1.py b
 
 December 26th, 2019 - prototype2.py - : Added a few lines of code in order to start training and even more lines for debugging those lines. Training not complete yet, almost there. Checking out diffrent batch sizes, epochs, and runtime of the code. Currently having some trouble building the combined model which combines the generator and discriminator. The error is because of the dense layer. Also added a few lines of code for TensorBoard. This isn't ready yet either, mostly because the generation has to be complete first. Still waiting for the SME code review. Added prototype2.py which contains all of these changes.  
 
-2020:
+January 2020:
+Will add later.
 
