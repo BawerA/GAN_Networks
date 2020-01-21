@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+#Testing chipping part#!/usr/bin/env python
+# coding: utf-8
+
 from keras.models import load_model
 import os
 import keras
@@ -94,5 +97,52 @@ def get_chips():
     return npchipped2, numberOfChips
 
 
+def chip_images():
+	print("\nStarting to chip the xView dataset.\n")
+	thechips = []
+	theclasses = []
+	thecoords = []
+	thecoords, thechips, theclasses = get_labels()
+	per = 1
+	X_data = []
+	files2 = glob.glob ("/root/Desktop/seniordesign/chippedimages/*.tif")#                     Change this to ur own directory
+	files = glob.glob ("/root/Desktop/seniordesign/testing_images/*.tif")#                     Change this to ur own directory
+	for myFile in files:
+		t = 0
+		print('\nChipping image at this location: ', myFile)
+		image = cv2.imread (myFile)
+		#X_data.append (image) #                                                         https://stackoverflow.com/questions/37747021/create-numpy-array-of-images
+		chipped_img, chipped_box, chipped_classes = wv.chip_image(img = image, coords = thecoords, classes=theclasses, shape=(224,224))
+		numberOfChips = chipped_img.shape[0]
+		print("This image created %d chips." % chipped_img.shape[0]) 
+		while t < numberOfChips:
+		    #print(t + 1)
+		    os.chdir(r"/root/Desktop/seniordesign/chippedimages") #       Change this to ur own directory
+		    mh.imsave('%d.tif' % per, chipped_img[t])
+		    os.chdir(r"/root/Desktop/seniordesign") #                     Change this to ur own directory
+		    t += 1
+		    per += 1
+
+
+
+
+def get_numpy():
+    os.chdir(r"/root/Desktop/seniordesign/chippedimages")
+    files2 = glob.glob ("/root/Desktop/seniordesign/chippedimages/*.tif")# #        Change this to ur own directory
+    image_data = []
+    for myFile in files2:
+        chipimage = mh.imread(myFile)
+        image_data.append(chipimage)
+
+
+    npchipped = np.array([np.array(Image.open(myFile)) for myFile in files2]) ### This puts all of the images in to one nparray, ( i think the block of code above does the same thing)
+#                                                                   https://stackoverflow.com/questions/39195113/how-to-load-multiple-images-in-a-numpy-array
+    npchipped2 = np.array(image_data) 
+    numberOfChips = len(image_data)	
+    return npchipped2, numberOfChips
+
 def get_array():
     print("Getting the numpy array...")
+
+chip_images()
+print('\n\nChipping comeplete.\n')
