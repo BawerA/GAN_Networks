@@ -37,7 +37,7 @@ import chip_script as chip_
 
 start = time.time()
 #######################################
-xview_numpy_array, numberOfChips = chip_.get_chips() #   <<<<< Our beautiful numpy array *********
+xview_numpy_array, numberOfChips = chip_.get_numpy() #   <<<<< Our beautiful numpy array *********
 #######################################
 #rank_check = tf.zeros(xview_numpy_array)
 #rank_check = tf.rank(xview_numpy_array)
