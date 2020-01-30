@@ -76,13 +76,9 @@ def build_generator():
     model.add(UpSampling2D())
 
     #  Below is the Fully-Connected or Core Layer
-    #model.add(Flatten())
+    #model.add(Flatten())   replaced this with Dropout() below
     model.add(Dropout(0.5))
-
-    #    Uncomment  line 75 and 76
-    
     model.add(Conv2D(3, kernel_size= (5,5), padding='same'))
-
     print("\n\t Generator's Layer information:\n")
     model.summary()
     return model
@@ -115,7 +111,7 @@ def build_discriminator():
     #  https://github.com/eriklindernoren/Keras-GAN/blob/master/dcgan/dcgan.py
    # tf.keras.backend.expand_dims(model, axis=-1)
 
-    model.add(Flatten())
+    model.add(Dropout(0.5))
     model.add(Dense(32, activation='sigmoid'))  # 32 is the 'units' parameter, output shape will have 32 dimensions, dont know what to put for units. Just put 32,
     # https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense   <<<<  Dense() documentation
 
@@ -141,14 +137,6 @@ def build_combined(generator, discriminator):
     model.summary()
     return model
 
-def prepare_images_for_disc(images):   #Prob will get rid of this method
-    # convert from unit8 to float32
-    images = images.astype('float32')
-    # scale from [0,255] to [-1,1]
-    images = (images - 127.5) / 127.5
-    return images
-
-
 
 
 #Build the stuff here:
@@ -160,9 +148,6 @@ combined_model.compile(optimizer='adam', loss='binary_crossentropy')
 #model.compile(optimizer='adam', )
 
             
-scaled_numpy = prepare_images_for_disc(xview_numpy_array)
-print("\nScaled numpy: \n", scaled_numpy.shape)
-
 
 #Training Here:
 
@@ -178,21 +163,14 @@ for epoch in range(total_epochs):
         print(i) # Prints at each batch size until the i reaches the batch size. Then restarts from 0 to the batch size again, this occurs for however many epochs
         the_variable += 1
         noise = np.random.uniform(-1.0, 1.0, size=[batch_size, 224, 224, 3]) #'batch_size' here was originally "numberOfChips"
-        print('created noise')          #Uncomment this
+
         generated_images = generator.predict(noise)         
-        print('generated noise')                           #Uncomment this
+
         real = xview_numpy_array[i:i+batch_size].reshape(-1, 224, 224, 3)              #Uncomment this
-        print("created real")
         shuffle_idx = np.arange(2*batch_size)#.reshape(1,224,224,3)                             #Uncomment this
         np.random.shuffle(shuffle_idx)                                                 #Uncomment this
-        print('shuffled')
         x = np.vstack([noise, real])[shuffle_idx]                                     #Keep this commented, error here
         y = np.concatenate([np.ones(batch_size), np.zeros(batch_size)])[shuffle_idx]  #Keep this commented
-        print("X and Y: ", x)
-        print(y)
-        print("X: ", x.shape[0])
-        print("Y: ", y.shape[0])
-        print("created x and y")
 
         discriminator.trainable = True
         d_loss = discriminator.train_on_batch(x, y)
@@ -209,9 +187,6 @@ print("Number of times this for loops runs : ", the_variable)
 
 tf.reset_default_graph()   # To clear the defined variables and operations of the previous cell
 # create graph
-a = tf.constant(2, name="a")
-b = tf.constant(3, name="b")
-c = tf.add(a, b, name="addition")
 # creating the writer out of the session
 # writer = tf.summary.FileWriter('./graphs', tf.get_default_graph())
 # launch the graph in a session
