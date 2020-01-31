@@ -167,8 +167,6 @@ combined_model.compile(optimizer='adam', loss='binary_crossentropy')
 #Training Here:
 
 batch_size = 250 #increments
-#valid = np.ones((batch_size, 1))
-#fake = np.zeros((batch_size, 1))
 total_epochs = 3
 loss = []
 #range(start, stop, step)  step=incrementation
@@ -180,19 +178,11 @@ for epoch in range(total_epochs):
         noise = np.random.uniform(-1.0, 1.0, size=[batch_size, 224, 224, 3]) #'batch_size' here was originally "numberOfChips"
         print('created noise', the_variable)          #Uncomment this
         generated_images = generator.predict(noise)         
-        #print('generated noise')                           #Uncomment this
         real = xview_numpy_array[i:i+batch_size]#.reshape(-1, 224, 224, 3)              #Uncomment this
-        #print("created real")
         shuffle_idx = np.arange(batch_size)#.reshape(1,224,224,3)                             #Uncomment this
         np.random.shuffle(shuffle_idx)                                                 #Uncomment this
-        #print('shuffled')
         x = np.vstack([noise, real])[shuffle_idx]   #Keep this commented, error here
         y = np.concatenate([np.ones(batch_size), np.zeros(batch_size)])[shuffle_idx]  #Keep this commented
-        #print("X and Y: ", x)
-        #print(y)
-        #print("X: ", x.shape[0])
-        #print("Y: ", y.shape[0])
-       # print("created x and y")
         os.chdir(r"/root/Desktop/seniordesign/generated_images")
         random_input = np.random.uniform(-1.0, 1.0, size=[batch_size, 224, 224, 3])
         fake = generator.predict(random_input)
@@ -213,9 +203,6 @@ print("Number of times this forloop runs : ", the_variable)
 
 tf.reset_default_graph()   # To clear the defined variables and operations of the previous cell
 # create graph
-a = tf.constant(2, name="a")
-b = tf.constant(3, name="b")
-c = tf.add(a, b, name="addition")
 # creating the writer out of the session
 # writer = tf.summary.FileWriter('./graphs', tf.get_default_graph())
 # launch the graph in a session
