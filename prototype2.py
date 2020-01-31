@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+
+# Testing protoype or final code
+#!/usr/bin/env python
+# coding: utf-8
+
 from keras.models import load_model
 import os
 import tensorflow.keras
@@ -33,11 +38,12 @@ import glob
 import mahotas as mh
 #from chainer.dataset import dataset_mixin
 from tqdm import tqdm
-import chip_script as chip_
+import chipchip as chip_
+import cs_chip as chip_2
 
 start = time.time()
 #######################################
-xview_numpy_array, numberOfChips = chip_.get_numpy() #   <<<<< Our beautiful numpy array *********
+xview_numpy_array, numberOfChips = chip_2.get_numpy() #   <<<<< Our numpy array *********
 #######################################
 #rank_check = tf.zeros(xview_numpy_array)
 #rank_check = tf.rank(xview_numpy_array)
@@ -76,9 +82,13 @@ def build_generator():
     model.add(UpSampling2D())
 
     #  Below is the Fully-Connected or Core Layer
-    #model.add(Flatten())   replaced this with Dropout() below
+    #model.add(Flatten())
     model.add(Dropout(0.5))
+
+    #    Uncomment  line 75 and 76
+    
     model.add(Conv2D(3, kernel_size= (5,5), padding='same'))
+
     print("\n\t Generator's Layer information:\n")
     model.summary()
     return model
@@ -111,6 +121,7 @@ def build_discriminator():
     #  https://github.com/eriklindernoren/Keras-GAN/blob/master/dcgan/dcgan.py
    # tf.keras.backend.expand_dims(model, axis=-1)
 
+    #model.add(Flatten()) **************<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< commented this and replaced it with dropout0.5 below
     model.add(Dropout(0.5))
     model.add(Dense(32, activation='sigmoid'))  # 32 is the 'units' parameter, output shape will have 32 dimensions, dont know what to put for units. Just put 32,
     # https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense   <<<<  Dense() documentation
@@ -139,6 +150,7 @@ def build_combined(generator, discriminator):
 
 
 
+
 #Build the stuff here:
 generator = build_generator()
 discriminator = build_discriminator()
@@ -148,6 +160,9 @@ combined_model.compile(optimizer='adam', loss='binary_crossentropy')
 #model.compile(optimizer='adam', )
 
             
+#scaled_numpy = prepare_images_for_disc(xview_numpy_array)
+#print("\nScaled numpy: \n", scaled_numpy.shape)
+
 
 #Training Here:
 
@@ -160,33 +175,47 @@ loss = []
 the_variable = 0
 for epoch in range(total_epochs):
     for i in range(0, xview_numpy_array.shape[0], batch_size):
-        print(i) # Prints at each batch size until the i reaches the batch size. Then restarts from 0 to the batch size again, this occurs for however many epochs
+        #print(i) # Prints at each batch size until the i reaches the batch size. Then restarts from 0 to the batch size again, this occurs for however many epochs
         the_variable += 1
         noise = np.random.uniform(-1.0, 1.0, size=[batch_size, 224, 224, 3]) #'batch_size' here was originally "numberOfChips"
-
+        print('created noise', the_variable)          #Uncomment this
         generated_images = generator.predict(noise)         
-
-        real = xview_numpy_array[i:i+batch_size].reshape(-1, 224, 224, 3)              #Uncomment this
-        shuffle_idx = np.arange(2*batch_size)#.reshape(1,224,224,3)                             #Uncomment this
+        #print('generated noise')                           #Uncomment this
+        real = xview_numpy_array[i:i+batch_size]#.reshape(-1, 224, 224, 3)              #Uncomment this
+        #print("created real")
+        shuffle_idx = np.arange(batch_size)#.reshape(1,224,224,3)                             #Uncomment this
         np.random.shuffle(shuffle_idx)                                                 #Uncomment this
-        x = np.vstack([noise, real])[shuffle_idx]                                     #Keep this commented, error here
+        #print('shuffled')
+        x = np.vstack([noise, real])[shuffle_idx]   #Keep this commented, error here
         y = np.concatenate([np.ones(batch_size), np.zeros(batch_size)])[shuffle_idx]  #Keep this commented
+        #print("X and Y: ", x)
+        #print(y)
+        #print("X: ", x.shape[0])
+        #print("Y: ", y.shape[0])
+       # print("created x and y")
+        os.chdir(r"/root/Desktop/seniordesign/generated_images")
+        random_input = np.random.uniform(-1.0, 1.0, size=[batch_size, 224, 224, 3])
+        fake = generator.predict(random_input)
+        mh.imsave('%d' % the_variable, fake[the_variable])
+        os.chdir(r"/root/Desktop/seniordesign")
+        #discriminator.trainable = True
+        #d_loss = discriminator.train_on_batch(x, y)
+        #print("Created d loss")
 
-        discriminator.trainable = True
-        d_loss = discriminator.train_on_batch(x, y)
-        print("Created d loss")
-
-        g_loss = combined_model.train_on_batch(noise, np.zeros(batch_size))
-        print("g loss created")
+        #g_loss = combined_model.train_on_batch(noise, np.zeros(batch_size))
+        #print("g loss created")
 
 
-print("Number of times this for loops runs : ", the_variable)
+print("Number of times this forloop runs : ", the_variable)
 
 
 #Tensorboard and other plots:
 
 tf.reset_default_graph()   # To clear the defined variables and operations of the previous cell
 # create graph
+a = tf.constant(2, name="a")
+b = tf.constant(3, name="b")
+c = tf.add(a, b, name="addition")
 # creating the writer out of the session
 # writer = tf.summary.FileWriter('./graphs', tf.get_default_graph())
 # launch the graph in a session
@@ -222,6 +251,12 @@ https://www.tensorflow.org/api_docs/python/tf/rank   <<<<<<<<<<<<<<<<<<<<<<<
 https://www.tensorflow.org/guide/tensor
 
 https://github.com/tensorflow/tensorflow/issues/9243
+
+
+
+use matplot to save fake images
+
+
 """
 end = time.time()
 print("\n\nTime it took to run the code(in seconds): ", end - start)
