@@ -45,7 +45,7 @@ import team_gmu_chip
 
 start = time.time()
 #######################################
-xview_numpy_array, numberOfChips = chip_2.get_numpy() #   <<<<< Our numpy array *********
+xview_numpy_array, numberOfChips = team_gmu_chip.get_numpy() #   <<<<< Our numpy array *********
 #######################################
 #rank_check = tf.zeros(xview_numpy_array)
 #rank_check = tf.rank(xview_numpy_array)
@@ -232,10 +232,14 @@ for epoch in range(total_epochs):
         print('shuffled %d ' % the_variable)
         
     
-        #x = np.vstack([noise, real])[shuffle_idx]   #Keep this commented, error here
-        #y = np.concatenate([np.ones(batch_size), np.zeros(batch_size)])[shuffle_idx]  #Keep this commented
+        x = np.vstack([noise, real])[shuffle_idx]   #Keep this commented, error here
+        y = np.concatenate([np.ones(batch_size), np.zeros(batch_size)])[shuffle_idx]  #Keep this commented
         
         the_variable += 1
+        discriminator.trainable = True
+        d_loss = discriminator.train_on_batch(x, y)
+        print("Created d loss")
+        g_loss = combined_model.train_on_batch(noise, np.zeros(batch_size))
 
 
 print("Number of times this forloop runs : ", the_variable)
