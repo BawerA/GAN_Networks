@@ -43,3 +43,8 @@ February 18th, 2020 - subfolder_train.py/subfolder_chip.py - : These programs co
 March 2020:
 
 March 12th, 2020 - Different_runs folder - : This folder contains all of the experiment runs we've been conducting. We've been trying to get rid of our mode collapse problem and also improve the quality in the images that we've been creating. To do this, we have tried adding, removing, and modifying the layers of our Generator and Discriminator. We've also tried different batch sizes, epochs, and epoch sizes. By the end of March, we hope to have low losses for both models and have higher quality images that are similar to the xView dataset. SAGE Competition at the end of next month. 
+
+
+
+
+WARNING:tensorflow:Discrepancy between trainable weights and collected trainable weights, did you set `model.trainable` without calling `model.compile` after ?
