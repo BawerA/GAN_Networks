@@ -45,6 +45,8 @@ March 2020:
 March 12th, 2020 - Different_runs folder - : This folder contains all of the experiment runs we've been conducting. We've been trying to get rid of our mode collapse problem and also improve the quality in the images that we've been creating. To do this, we have tried adding, removing, and modifying the layers of our Generator and Discriminator. We've also tried different batch sizes, epochs, and epoch sizes. By the end of March, we hope to have low losses for both models and have higher quality images that are similar to the xView dataset. SAGE Competition at the end of next month. 
 
 
+April 2020:
 
+April 3rd, 2020 - Progressive_gan.py - : This path month we have been working on desiging a Progressive GAN so that we could avoid mode collapse when we are training our models. Our DCGAN was having this issue and we could not seem to fix it so our SME recommended us to use a Progressive GAN instead. We also modified our chip program. Both of these will be uploaded with a more detailed explanation of the code tomorrow. 
 
 WARNING:tensorflow:Discrepancy between trainable weights and collected trainable weights, did you set `model.trainable` without calling `model.compile` after ?
