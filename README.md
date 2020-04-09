@@ -49,4 +49,3 @@ April 2020:
 
 April 3rd, 2020 - Progressive_gan.py - : This path month we have been working on desiging a Progressive GAN so that we could avoid mode collapse when we are training our models. Our DCGAN was having this issue and we could not seem to fix it so our SME recommended us to use a Progressive GAN instead. We also modified our chip program. Both of these will be uploaded with a more detailed explanation of the code tomorrow. 
 
-WARNING:tensorflow:Discrepancy between trainable weights and collected trainable weights, did you set `model.trainable` without calling `model.compile` after ?
